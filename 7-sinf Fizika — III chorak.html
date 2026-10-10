@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>7-sinf Fizika — III chorak</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#141829; --bg-2:#1c2138; --panel:#1f253f; --panel-2:#262d4c;
+  --ink:#EDE8DC; --dim:#B9B6C8; --line:#363c5c;
+  --amber:#F2A93B; --teal:#59D6C4; --teal-deep:#2F9E8F; --danger:#E8735F;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);
+  background-image:radial-gradient(circle at 10% 0%,rgba(89,214,196,.08),transparent 40%),radial-gradient(circle at 90% 10%,rgba(242,169,59,.1),transparent 45%);
+  color:var(--ink);font-family:'Manrope',sans-serif;line-height:1.6}
+h1,h2{font-family:'Fraunces',serif;font-weight:600;margin:0 0 .4em;color:#FBF7EE}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 80px}
+.hero{padding:48px 20px 36px;border-bottom:1px solid var(--line)}
+.hero .kicker{color:var(--teal);font-family:'Fraunces',serif;font-style:italic;margin-bottom:8px}
+.hero h1{font-size:clamp(1.8rem,6vw,2.6rem)}
+.hero p{color:var(--dim);max-width:46ch}
+section{padding:38px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:none}
+.num{font-family:'Fraunces',serif;font-style:italic;color:var(--dim);font-size:.9rem;margin-bottom:4px}
+section h2{font-size:clamp(1.25rem,4vw,1.6rem)}
+.lead{color:var(--dim);max-width:62ch;font-size:.98rem}
+.term{background:rgba(242,169,59,.14);border-bottom:2px solid var(--amber);color:#FBF7EE;padding:0 3px;border-radius:3px;font-weight:600}
+.term.c{background:rgba(89,214,196,.14);border-bottom:2px solid var(--teal)}
+.example-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:14px 0 4px}
+.example{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:.88rem;color:var(--dim)}
+.example strong{color:var(--ink);display:block;font-size:.9rem;margin-bottom:2px}
+.sim{margin-top:18px;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.sim-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--panel-2);font-size:.82rem;color:var(--dim)}
+.sim-head strong{color:var(--ink);font-size:.88rem}
+.sim-body{padding:16px}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.chip{font-family:'Manrope',sans-serif;font-weight:600;font-size:.82rem;padding:8px 13px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--dim);cursor:pointer;transition:.15s}
+.chip:hover{border-color:var(--teal);color:var(--ink)}
+.chip.active{background:var(--teal);border-color:var(--teal);color:#04211d}
+.detail{background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:.92rem;color:var(--dim);min-height:60px}
+.detail b{color:#FBF7EE}
+canvas{display:block;width:100%;height:auto;background:var(--bg-2);border-radius:10px;touch-action:none}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.calc-field label{display:block;font-size:.8rem;color:var(--dim);margin-bottom:6px}
+.calc-field input[type=range]{width:100%;accent-color:var(--amber)}
+.calc-field .val{font-weight:700;color:var(--amber)}
+.calc-result{background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:12px 16px;font-size:1rem;text-align:center;margin-bottom:12px}
+.calc-result .f{font-family:'Fraunces',serif;font-size:1.15rem;color:var(--teal)}
+.quiz-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px}
+.quiz-card p.q{font-weight:700;color:#FBF7EE;margin:0 0 8px;font-size:.92rem}
+.opt{display:block;width:100%;text-align:left;background:var(--bg-2);border:1px solid var(--line);color:var(--ink);padding:8px 12px;border-radius:7px;margin-bottom:6px;cursor:pointer;font-size:.86rem}
+.opt:hover{border-color:var(--teal)}
+.opt.correct{background:rgba(89,214,196,.18);border-color:var(--teal)}
+.opt.wrong{background:rgba(232,115,95,.16);border-color:var(--danger)}
+footer{text-align:center;color:var(--dim);font-size:.82rem;padding:36px 20px 10px}
+</style>
+</head>
+<body>
+<div class="hero"><div class="wrap" style="padding:0">
+  <div class="kicker">7-sinf · Fizika · III chorak</div>
+  <h1>Kuchlar va energiya olami</h1>
+  <p>Jismlarga ta'sir qiluvchi kuchlardan tortib, energiyaning bir turdan boshqa turga aylanishigacha — 11 ta mavzu, har biri jonli misol va interaktiv mashq bilan.</p>
+</div></div>
+<div class="wrap">
+
+<section><div class="num">1-mavzu</div><h2>Kuchlar</h2>
+<p class="lead"><span class="term">Kuch</span> — jismlarning bir-biriga ta'sirini ifodalovchi fizik kattalik. Bir nechta kuch turi mavjud.</p>
+<div class="sim"><div class="sim-head"><strong>Kuch turlari</strong><span>Bosib ko'ring</span></div><div class="sim-body">
+<div class="chip-row" id="g1"></div><div class="detail" id="g1d"></div>
+</div></div></section>
+
+<section><div class="num">2-mavzu</div><h2>Kuchning son qiymati va yo'nalishi</h2>
+<p class="lead">Kuch — <span class="term c">vektor kattalik</span>, ya'ni uning son qiymati ham, yo'nalishi ham bor. Strelkani sudrab kuch vektorini o'zgartiring.</p>
+<div class="sim"><div class="sim-head"><strong>Kuch vektori</strong><span>Sudrab ko'ring</span></div><div class="sim-body">
+<canvas id="vecCanvas" width="640" height="260"></canvas>
+<div class="detail" id="vecOut">Kuch: 0 N, yo'nalish: 0°</div>
+</div></div></section>
+
+<section><div class="num">3-mavzu</div><h2>Gravitatsiya kuchi</h2>
+<p class="lead"><span class="term c">Gravitatsiya kuchi</span> — jismlarni o'zaro tortuvchi kuch. Turli osmon jismlarida og'irlik kuchi har xil.</p>
+<div class="sim"><div class="sim-head"><strong>Sayyoralarda og'irlik</strong><span>Tanlang</span></div><div class="sim-body">
+<div class="chip-row" id="g3"></div><div class="detail" id="g3d"></div>
+</div></div></section>
+
+<section><div class="num">4-mavzu</div><h2>Ishqalanish kuchi</h2>
+<p class="lead"><span class="term">Ishqalanish kuchi</span> — ikki sirt bir-biriga tegib harakatlanganda yuzaga keladigan qarshilik kuchi. Sirtni tanlab, jism qanday harakatlanishini ko'ring.</p>
+<div class="sim"><div class="sim-head"><strong>Sirt tanlang</strong><span>Harakatni kuzating</span></div><div class="sim-body">
+<div class="chip-row"><button class="chip active" data-s="ice">Muz</button><button class="chip" data-s="asphalt">Asfalt</button><button class="chip" data-s="sand">Qum</button></div>
+<canvas id="frictionCanvas" width="640" height="160"></canvas>
+</div></div></section>
+
+<section><div class="num">5-mavzu</div><h2>Havoning qarshiligi</h2>
+<p class="lead"><span class="term">Havo qarshiligi</span> — jism havoda harakatlanganda havo zarrachalari ko'rsatadigan qarshilik. Shakl qancha keng bo'lsa, qarshilik shuncha katta.</p>
+<div class="sim"><div class="sim-head"><strong>Tushish taqqoslash</strong><span>Rejimni tanlang</span></div><div class="sim-body">
+<div class="chip-row"><button class="chip active" data-f="stone">Tosh</button><button class="chip" data-f="paper">Yozgi qog'oz</button><button class="chip" data-f="parachute">Parashyut</button></div>
+<canvas id="airCanvas" width="640" height="220"></canvas>
+</div></div></section>
+
+<section><div class="num">6-mavzu</div><h2>Elastiklik kuchi</h2>
+<p class="lead"><span class="term c">Elastiklik kuchi</span> — deformatsiyalangan jism avvalgi holatiga qaytishga intiladigan kuch (Guk qonuni). Yukni o'zgartirib, prujina cho'zilishini kuzating.</p>
+<div class="sim"><div class="sim-head"><strong>Prujina (Guk qonuni)</strong><span>F = k·x</span></div><div class="sim-body">
+<canvas id="springCanvas" width="640" height="220"></canvas>
+<input type="range" id="loadSlider" min="0" max="10" value="3" step="0.5" style="width:100%;accent-color:var(--amber)">
+</div></div></section>
+
+<section><div class="num">7-mavzu</div><h2>Laboratoriya ishi: Prujina bikrligini aniqlash</h2>
+<p class="lead">Yuk massasi va cho'zilishdan prujinaning <span class="term c">bikrlik koeffitsienti (k)</span>ni hisoblang.</p>
+<div class="sim"><div class="sim-head"><strong>Hisoblash</strong><span>k = F / x</span></div><div class="sim-body">
+<div class="calc-grid">
+  <div class="calc-field"><label>Kuch, F = <span class="val" id="fVal">4</span> N</label><input type="range" id="fSlider" min="1" max="20" value="4"></div>
+  <div class="calc-field"><label>Cho'zilish, x = <span class="val" id="xVal">0.08</span> m</label><input type="range" id="xSlider" min="2" max="40" value="8"></div>
+</div>
+<div class="calc-result"><span class="f">k = F / x = <span id="kResult">50</span> N/m</span></div>
+</div></div></section>
+
+<section><div class="num">8-mavzu</div><h2>Mexanik ish deganda nimani tushunamiz?</h2>
+<p class="lead"><span class="term">Mexanik ish</span> — kuch yo'nalishi bo'yicha jism harakatlanganda bajariladi: <span class="term">A = F · S</span>.</p>
+<div class="sim"><div class="sim-head"><strong>Ish kalkulyatori</strong><span>A = F · S</span></div><div class="sim-body">
+<div class="calc-grid">
+  <div class="calc-field"><label>Kuch, F = <span class="val" id="f2Val">10</span> N</label><input type="range" id="f2Slider" min="1" max="50" value="10"></div>
+  <div class="calc-field"><label>Yo'l, S = <span class="val" id="s2Val">5</span> m</label><input type="range" id="s2Slider" min="1" max="20" value="5"></div>
+</div>
+<div class="calc-result"><span class="f">A = F · S = <span id="aResult">50</span> J</span></div>
+</div></div></section>
+
+<section><div class="num">9-mavzu</div><h2>Energiya nima?</h2>
+<p class="lead"><span class="term c">Energiya</span> — ish bajarish qobiliyati. U yo'qolmaydi, faqat bir turdan boshqa turga aylanadi.</p>
+<div class="example-row">
+  <div class="example"><strong>Kinetik energiya</strong>Harakatlanayotgan jism energiyasi</div>
+  <div class="example"><strong>Potensial energiya</strong>Balandlikda turgan jism energiyasi</div>
+</div></section>
+
+<section><div class="num">10-mavzu</div><h2>Energiyaning qanday turlari bor?</h2>
+<p class="lead">Energiya turlari bilan tanishamiz.</p>
+<div class="sim"><div class="sim-head"><strong>Energiya turlari</strong><span>Bosib ko'ring</span></div><div class="sim-body">
+<div class="chip-row" id="g10"></div><div class="detail" id="g10d"></div>
+</div></div></section>
+
+<section><div class="num">11-mavzu</div><h2>Energiyaning bir turdan boshqa turga aylanishi va uzatilishi</h2>
+<p class="lead">Mayatnikni ushlab tortib, kinetik va potensial energiya bir-biriga qanday aylanishini kuzating.</p>
+<div class="sim"><div class="sim-head"><strong>Mayatnik energiyasi</strong><span>Bosib tortib qo'yib yuboring</span></div><div class="sim-body">
+<canvas id="penCanvas" width="640" height="300"></canvas>
+<div class="chip-row"><button class="chip" id="penRelease">Qo'yib yuborish</button><button class="chip" id="penReset">Qayta tiklash</button></div>
+</div></div></section>
+
+<section><div class="num">Umumiy tekshiruv</div><h2>5 ta savol</h2>
+<div class="quiz-card"><p class="q">1. Kuch qanday kattalik?</p>
+<button class="opt" data-c="true">Vektor kattalik (son qiymati va yo'nalishi bor)</button><button class="opt" data-c="false">Skalyar kattalik</button><button class="opt" data-c="false">O'lchanmaydigan kattalik</button></div>
+<div class="quiz-card"><p class="q">2. Qaysi sirtda ishqalanish kuchi eng kichik?</p>
+<button class="opt" data-c="true">Muzda</button><button class="opt" data-c="false">Qumda</button><button class="opt" data-c="false">Asfaltda</button></div>
+<div class="quiz-card"><p class="q">3. Guk qonuni formulasi qaysi?</p>
+<button class="opt" data-c="false">F = m·a</button><button class="opt" data-c="true">F = k·x</button><button class="opt" data-c="false">F = S/t</button></div>
+<div class="quiz-card"><p class="q">4. Harakatlanayotgan jism qaysi energiyaga ega?</p>
+<button class="opt" data-c="true">Kinetik energiya</button><button class="opt" data-c="false">Potensial energiya</button><button class="opt" data-c="false">Yadro energiyasi</button></div>
+<div class="quiz-card"><p class="q">5. Mexanik ish formulasi qanday?</p>
+<button class="opt" data-c="true">A = F · S</button><button class="opt" data-c="false">A = F / S</button><button class="opt" data-c="false">A = S / F</button></div>
+</section>
+
+</div>
+<footer>7-sinf fizika · III chorak — Taqvim-mavzu reja asosida</footer>
+
+<script>
+function chipGroup(id, data){
+  const row = document.getElementById(id), det = document.getElementById(id+'d');
+  data.forEach((d,i)=>{
+    const b = document.createElement('button'); b.className='chip'+(i===0?' active':''); b.textContent=d.t;
+    b.onclick=()=>{ row.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); b.classList.add('active'); det.innerHTML=d.h; };
+    row.appendChild(b);
+  });
+  det.innerHTML = data[0].h;
+}
+chipGroup('g1',[
+  {t:"Og'irlik kuchi",h:"<b>Og'irlik kuchi</b> — Yer jismni o'ziga tortadi. Misol: tushayotgan olma."},
+  {t:"Ishqalanish kuchi",h:"<b>Ishqalanish kuchi</b> — sirtlar orasidagi qarshilik. Misol: g'ildirak yo'l bilan ishqalanishi."},
+  {t:"Elastiklik kuchi",h:"<b>Elastiklik kuchi</b> — deformatsiyadan keyin shaklni tiklovchi kuch. Misol: prujina, rezina."},
+  {t:"Arximed kuchi",h:"<b>Arximed kuchi</b> — suyuqlikka botirilgan jismni yuqoriga itaruvchi kuch. Misol: kema suvda suzishi."},
+]);
+chipGroup('g3',[
+  {t:"Yer",h:"Yerda og'irlik tezlanishi g ≈ 9.8 m/s². 1 kg jism og'irligi ≈ 9.8 N."},
+  {t:"Oy",h:"Oyda tortishish kuchi Yerdagidan ~6 marta kichik — shuning uchun astronavtlar "+"\"sakrab\" yuradi."},
+  {t:"Yupiter",h:"Yupiterda tortishish kuchi Yerdagidan ~2.5 marta katta — u yerda tanangiz og'irroq bo'lar edi."},
+  {t:"Kosmosda",h:"Yerdan uzoqda, erkin tushish holatida — og'irliksizlik holati yuzaga keladi."},
+]);
+chipGroup('g10',[
+  {t:"Kinetik",h:"<b>Kinetik energiya</b> — harakatdagi jism energiyasi. Misol: yugurayotgan sportchi."},
+  {t:"Potensial",h:"<b>Potensial energiya</b> — balandlikdagi yoki siqilgan jism energiyasi. Misol: tog' cho'qqisidagi tosh."},
+  {t:"Issiqlik",h:"<b>Issiqlik energiyasi</b> — molekulalar harakati energiyasi. Misol: qaynayotgan suv."},
+  {t:"Elektr",h:"<b>Elektr energiyasi</b> — zaryadlar harakati energiyasi. Misol: elektr tarmog'i."},
+]);
+
+// 2. Force vector drag
+const vecCanvas=document.getElementById('vecCanvas'), vctx=vecCanvas.getContext('2d'), vecOut=document.getElementById('vecOut');
+let handle={x:460,y:130}; const origin={x:320,y:130}; let dragging=false;
+function drawVec(){
+  const w=vecCanvas.width,h=vecCanvas.height; vctx.clearRect(0,0,w,h);
+  vctx.strokeStyle='#363c5c'; vctx.lineWidth=1;
+  vctx.beginPath(); vctx.moveTo(0,origin.y); vctx.lineTo(w,origin.y); vctx.moveTo(origin.x,0); vctx.lineTo(origin.x,h); vctx.stroke();
+  vctx.fillStyle='#F2A93B'; vctx.beginPath(); vctx.arc(origin.x,origin.y,6,0,Math.PI*2); vctx.fill();
+  vctx.strokeStyle='#59D6C4'; vctx.lineWidth=3;
+  vctx.beginPath(); vctx.moveTo(origin.x,origin.y); vctx.lineTo(handle.x,handle.y); vctx.stroke();
+  const ang = Math.atan2(handle.y-origin.y, handle.x-origin.x);
+  vctx.save(); vctx.translate(handle.x,handle.y); vctx.rotate(ang);
+  vctx.beginPath(); vctx.moveTo(0,0); vctx.lineTo(-14,-7); vctx.lineTo(-14,7); vctx.closePath(); vctx.fillStyle='#59D6C4'; vctx.fill();
+  vctx.restore();
+  const dx=handle.x-origin.x, dy=handle.y-origin.y;
+  const mag = Math.round(Math.hypot(dx,dy)/8);
+  let deg = Math.round(-ang*180/Math.PI); if(deg<0) deg+=360;
+  vecOut.innerHTML = `Kuch: <b style="color:var(--amber)">${mag} N</b>, yo'nalish: <b style="color:var(--teal)">${deg}°</b>`;
+}
+vecCanvas.addEventListener('pointerdown', e=>{ dragging=true; });
+vecCanvas.addEventListener('pointerup', ()=> dragging=false);
+vecCanvas.addEventListener('pointerleave', ()=> dragging=false);
+vecCanvas.addEventListener('pointermove', e=>{
+  if(!dragging) return;
+  const rect=vecCanvas.getBoundingClientRect();
+  const scaleX=vecCanvas.width/rect.width, scaleY=vecCanvas.height/rect.height;
+  handle.x = (e.clientX-rect.left)*scaleX; handle.y=(e.clientY-rect.top)*scaleY;
+  drawVec();
+});
+drawVec();
+
+// 4. Friction
+const frictionCanvas=document.getElementById('frictionCanvas'), frctx=frictionCanvas.getContext('2d');
+let surface='ice', ft=0;
+document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{ document.querySelectorAll('[data-s]').forEach(x=>x.classList.remove('active')); b.classList.add('active'); surface=b.dataset.s; ft=0; });
+const frictionDecel={ice:0.05, asphalt:0.4, sand:1.2};
+function drawFriction(){
+  const w=frictionCanvas.width,h=frictionCanvas.height; frctx.clearRect(0,0,w,h);
+  frctx.strokeStyle = surface==='ice'?'#6FB7F2':surface==='asphalt'?'#555':'#C9A86A';
+  frctx.lineWidth=6; frctx.beginPath(); frctx.moveTo(20,h-30); frctx.lineTo(w-20,h-30); frctx.stroke();
+  ft+=0.05;
+  const v0=6, decel=frictionDecel[surface];
+  const vel = Math.max(0, v0-decel*ft);
+  frictionCanvas._x = (frictionCanvas._x||20) + vel;
+  if(frictionCanvas._x>w-50) frictionCanvas._x=20, ft=0;
+  frctx.fillStyle='#F2A93B'; frctx.beginPath(); frctx.arc(frictionCanvas._x,h-45,14,0,Math.PI*2); frctx.fill();
+  frctx.fillStyle='#EDE8DC'; frctx.font='12px Manrope'; frctx.fillText('Tezlik: '+vel.toFixed(1), 20,20);
+  requestAnimationFrame(drawFriction);
+}
+drawFriction();
+
+// 5. Air resistance
+const airCanvas=document.getElementById('airCanvas'), actx2=airCanvas.getContext('2d');
+let fallType='stone', at2=0;
+document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{ document.querySelectorAll('[data-f]').forEach(x=>x.classList.remove('active')); b.classList.add('active'); fallType=b.dataset.f; at2=0; });
+const fallSpeed={stone:2.6, paper:0.9, parachute:0.4};
+function drawAir(){
+  const w=airCanvas.width,h=airCanvas.height; actx2.clearRect(0,0,w,h);
+  actx2.strokeStyle='#363c5c'; actx2.beginPath(); actx2.moveTo(0,h-20); actx2.lineTo(w,h-20); actx2.stroke();
+  at2 += fallSpeed[fallType];
+  if(at2 > h-50) at2=0;
+  actx2.fillStyle = fallType==='stone'?'#B9B6C8':fallType==='paper'?'#F2A93B':'#59D6C4';
+  if(fallType==='parachute'){
+    actx2.beginPath(); actx2.arc(w/2, 20+at2, 24, Math.PI,0); actx2.fill();
+    actx2.fillRect(w/2-4,20+at2,8,18);
+  } else {
+    actx2.beginPath(); actx2.arc(w/2, 20+at2, fallType==='stone'?12:16, 0, Math.PI*2); actx2.fill();
+  }
+  requestAnimationFrame(drawAir);
+}
+drawAir();
+
+// 6. Spring
+const springCanvas=document.getElementById('springCanvas'), spr=springCanvas.getContext('2d');
+const loadSlider=document.getElementById('loadSlider');
+function drawSpring(){
+  const w=springCanvas.width,h=springCanvas.height; spr.clearRect(0,0,w,h);
+  const load=parseFloat(loadSlider.value);
+  const restLen=70, stretch=load*10;
+  const topY=20, bottomY=topY+restLen+stretch;
+  spr.strokeStyle='#B9B6C8'; spr.lineWidth=2;
+  spr.beginPath(); spr.moveTo(w/2-40,topY); spr.lineTo(w/2+40,topY); spr.stroke();
+  const coils=10; spr.beginPath(); spr.moveTo(w/2,topY);
+  for(let i=0;i<coils;i++){ const y=topY+(i+1)*((bottomY-topY)/coils); const x=w/2+(i%2===0?20:-20); spr.lineTo(x,y); }
+  spr.lineTo(w/2,bottomY); spr.strokeStyle='#59D6C4'; spr.stroke();
+  spr.fillStyle='#F2A93B'; spr.fillRect(w/2-20,bottomY,40,20+load*2);
+  spr.fillStyle='#EDE8DC'; spr.font='12px Manrope'; spr.fillText('Yuk: '+load.toFixed(1)+' kg · Cho\'zilish: '+stretch.toFixed(0)+' px', 20,20);
+}
+loadSlider.addEventListener('input', drawSpring); drawSpring();
+
+// 7. Stiffness calc
+const fSlider=document.getElementById('fSlider'), xSlider=document.getElementById('xSlider'), fVal=document.getElementById('fVal'), xVal=document.getElementById('xVal'), kResult=document.getElementById('kResult');
+function updateK(){ const F=parseInt(fSlider.value,10), xmm=parseInt(xSlider.value,10); fVal.textContent=F; const x=xmm/100; xVal.textContent=x.toFixed(2); kResult.textContent=Math.round(F/x); }
+fSlider.oninput=updateK; xSlider.oninput=updateK; updateK();
+
+// 8. Work calc
+const f2Slider=document.getElementById('f2Slider'), s2Slider=document.getElementById('s2Slider'), f2Val=document.getElementById('f2Val'), s2Val=document.getElementById('s2Val'), aResult=document.getElementById('aResult');
+function updateA(){ const F=parseInt(f2Slider.value,10), S=parseInt(s2Slider.value,10); f2Val.textContent=F; s2Val.textContent=S; aResult.textContent=F*S; }
+f2Slider.oninput=updateA; s2Slider.oninput=updateA; updateA();
+
+// 11. Pendulum energy
+const penCanvas=document.getElementById('penCanvas'), pctx=penCanvas.getContext('2d');
+let penAngle=0.9, penVel=0, released=false, pivot={x:320,y:30}, len=200;
+function drawPendulum(){
+  const w=penCanvas.width,h=penCanvas.height; pctx.clearRect(0,0,w,h);
+  if(released){
+    const g=0.0018; penVel += -g*Math.sin(penAngle); penAngle += penVel; penVel*=0.999;
+  }
+  const bobX = pivot.x+Math.sin(penAngle)*len, bobY=pivot.y+Math.cos(penAngle)*len;
+  pctx.strokeStyle='#59D6C4'; pctx.lineWidth=2; pctx.beginPath(); pctx.moveTo(pivot.x,pivot.y); pctx.lineTo(bobX,bobY); pctx.stroke();
+  pctx.fillStyle='#B9B6C8'; pctx.beginPath(); pctx.arc(pivot.x,pivot.y,5,0,Math.PI*2); pctx.fill();
+  pctx.fillStyle='#F2A93B'; pctx.beginPath(); pctx.arc(bobX,bobY,16,0,Math.PI*2); pctx.fill();
+  const h_rel = 1-Math.cos(penAngle);
+  const peMax=1;
+  const pe = h_rel, ke = Math.max(0, peMax-h_rel+ (released?0:0));
+  pctx.fillStyle='#EDE8DC'; pctx.font='12px Manrope';
+  pctx.fillText('Potensial energiya: '+Math.round(pe*100)+'%', 20, h-40);
+  pctx.fillText('Kinetik energiya: '+Math.round((1-pe)*100)+'%', 20, h-20);
+  requestAnimationFrame(drawPendulum);
+}
+document.getElementById('penRelease').onclick=()=>{ released=true; };
+document.getElementById('penReset').onclick=()=>{ released=false; penAngle=0.9; penVel=0; };
+drawPendulum();
+
+// Quizzes
+document.querySelectorAll('.quiz-card').forEach(card=>{
+  const opts = card.querySelectorAll('.opt');
+  opts.forEach(opt=>{ opt.addEventListener('click', ()=>{ if(card.dataset.a) return; card.dataset.a='1';
+    opts.forEach(o=>{ if(o.dataset.c==='true') o.classList.add('correct'); else if(o===opt) o.classList.add('wrong'); }); }); });
+});
+</script>
+</body>
+</html>
